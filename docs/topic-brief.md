@@ -17,7 +17,7 @@
 
 ### 対象の直接原因
 
-`String.replaceAll(regex, replacement)`へ外部入力をそのまま`replacement`として渡している。`$`は置換文字列内でグループ参照に使われるため、金額の先頭にある`$5`が存在しないグループを指すものとして解釈され、`IllegalArgumentException`になる。
+`String.replaceAll(regex, replacement)`へ外部入力をそのまま`replacement`として渡している。`$`は置換文字列内でグループ参照に使われるため、金額の先頭にある`$5`が存在しないグループを指すものとして解釈され、JDK 21では`IndexOutOfBoundsException`になる。
 
 ### 対象外
 
@@ -33,7 +33,7 @@
 | 最終観測 | `lastRendered()`が`"Price: $5.00"`となり、`successfulRenderCount()`が`2`であることを別々に検証する。 |
 | 決定性 | 時刻、乱数、並行実行、`sleep`、外部I/Oを使わず、固定文字列とインメモリ状態だけを使う。 |
 | 固定状態の検証コマンド | `mvn --batch-mode clean test` |
-| バグ状態の確認コマンド | `git checkout <bug-commit>`後に`mvn --batch-mode test -Dtest=AmountTemplateServiceTest` |
+| バグ状態の確認コマンド | `git checkout d5bffc6`後に`mvn --batch-mode test -Dtest=AmountTemplateServiceTest` |
 
 ## 仮説
 
